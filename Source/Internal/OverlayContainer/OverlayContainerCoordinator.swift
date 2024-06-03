@@ -16,15 +16,14 @@ struct OverlayContainerLayout: Equatable {
 
 // (gz) 2022-01-30 `SwiftUI` compares struct properties one by one to determine either to update the view or not.
 // To avoid useless updates, we wrap the passive values inside this class.
-//class OverlayContainerPassiveContainer: Equatable {
-struct OverlayContainerPassiveContainer {
+class OverlayContainerPassiveContainer: Equatable {
 
     var onTranslation: ((OverlayTranslation) -> Void)?
     var onNotchChange: ((Int) -> Void)?
 
-//    static func == (lhs: OverlayContainerPassiveContainer, rhs: OverlayContainerPassiveContainer) -> Bool {
-//        lhs === rhs
-//    }
+    static func == (lhs: OverlayContainerPassiveContainer, rhs: OverlayContainerPassiveContainer) -> Bool {
+        lhs === rhs
+    }
 }
 
 struct OverlayContainerState: Equatable {
@@ -143,9 +142,8 @@ extension OverlayContainerCoordinator: OverlayContainerViewControllerDelegate {
             velocity: transitionCoordinator.velocity,
             heightForNotchIndex: { transitionCoordinator.height(forNotchAt: $0) }
         )
-        withTransaction(transaction) { [passiveContainer] in
-//        withTransaction(transaction) { [weak passiveContainer] in
-			passiveContainer.onTranslation?(translation)
+        withTransaction(transaction) { [weak passiveContainer] in
+            passiveContainer?.onTranslation?(translation)
         }
     }
 

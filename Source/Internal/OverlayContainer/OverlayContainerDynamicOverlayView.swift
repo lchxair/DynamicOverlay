@@ -42,8 +42,8 @@ struct OverlayContainerDynamicOverlayView<Background: View, Content: View>: View
             // This is tricky. `OverlayContainerPassiveContainer` is a class inside a struct,
             // `passiveContainer.onNotchChange = { self.behavior.binding?.wrappedValue = $0 }`
             // would create a retain cycle as `self` includes a ref to `passiveContainer`.
-//				let behavior = self.behavior
-			self.passiveContainer.onNotchChange = { self.behavior.binding?.wrappedValue = $0 }
+				let behavior = self.behavior
+			self.passiveContainer.onNotchChange = { behavior.binding?.wrappedValue = $0 }
         }
         .onDragAreaChange {
             dragArea = $0
